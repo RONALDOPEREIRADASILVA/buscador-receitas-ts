@@ -1,18 +1,9 @@
-import './style.css'
-import { setupCounter } from './counter.ts'
+// Importando o CSS do Bootstrap instalado via NPM
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<section id="center">
- 
-  <div>
-    <h1>Busador de receitas</h1>
-    <p>
-     <input type="text" requerid>
-    </p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+// Selecionando os elementos que vamos usar
+const gridReceitas = document.querySelector<HTMLElement>('#lista-receitas');
+const inputBusca = document.querySelector<HTMLInputElement>('#input-busca');
 
-`
-
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+console.log("Sistema de receitas inicializado com sucesso! 👨‍🍳");

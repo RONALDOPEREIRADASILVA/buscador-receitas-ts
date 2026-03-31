@@ -18,37 +18,45 @@
             <input type="text" id="input-busca" class="form-control bg-light border-0" placeholder="Pesquisar receitas....">
           </div>
           <div class="d-flex overflow-x-auto gap-2 pb-2" style="scrollbar-width: none;">
-            <button class="btn btn-success rounded-pill px-4">Tudo</button>
-            <button class="btn btn-outline-success rounded-pill px-4 text-nowrap">Massas</button>
-            <button class="btn btn-outline-success rounded-pill px-4 text-nowrap">Saudável</button>
-            <button class="btn btn-outline-success rounded-pill px-4 text-nowrap">Rápido</button>
-          </div>
-          </div>
-        </div>
+            <button class="btn btn-success btn-categoria rounded-pill px-4" data-categoria="tudo">Tudo</button>
 
+           <button class="btn btn-outline-secondary btn-categoria rounded-pill px-4 text-nowrap" data-categoria="Massas">Massas</button>
+
+           <button class="btn btn-outline-secondary btn-categoria rounded-pill px-4 text-nowrap" data-categoria="Saudável">Saudável</button>
+
+           <button class="btn btn-outline-secondary btn-categoria rounded-pill px-4 text-nowrap" data-categoria="Rápido">Rápido</button>
+          </div>
+          </div>
       </header>
+      </div>
 
-      <main class="container my-4">
+      
+
+       <main class="container my-4">
         <div class="row g-3" id="lista-receitas">
           <!-- Card de Exemplo (Será gerado pelo TS depois) -->
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1473093226795-af9932fe5856?q=80&w=400" class="card-img-top" alt="Pasta">
-              <div class="card-body p-2">
-                <h6 class="card-title fw-bold mb-1" style="font-size: 0.9rem;">Macarrão Pesto</h6>
-                <div class="d-flex align-items-center text-muted" style="font-size: 0.75rem;">
-                  <i class="bi bi-clock me-1"></i> 20 min
-                  <i class="bi bi-bar-chart-fill ms-2 me-1"></i> Fácil
-                </div>
-              </div>
-            </div>
-          </div>
-          
         </div>
-      </main>
-    </div>
+       </main>
+     </div>
 
-    <script type="module" src="/src/main.ts"></script
+
+     <div class="modal fade" id="recipeModal" tabindex="-1" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+     <div class="modal-content">
+       <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="modalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+        <h6 class="fw-bold">Ingredientes</h6>
+        <ul id="modalIngredients" class="mb-4"></ul>
+        <h6 class="fw-bold">Passo a Passo</h6>
+        <p id="modalInstructions" class="text-muted"></p>
+       </div>
+     </div>
+     </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
 
     
   </body>

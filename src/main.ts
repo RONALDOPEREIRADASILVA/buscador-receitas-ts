@@ -9,9 +9,9 @@ import type { Recipe } from "../src/types/Recipe";
 // Selecionando os elementos que vamos usar
 const gridReceitas = document.querySelector<HTMLElement>('#lista-receitas');
 const inputBusca = document.querySelector<HTMLInputElement>('#input-busca');
-
+let receitasAtuais:Recipe[]=[...mockRecipes];
 // Função que limpa o grid e coloca as receitas na tela 
-function renderizarReceitas(lista = mockRecipes){
+function renderizarReceitas(lista = receitasAtuais){
     if(!gridReceitas) return;
 
     gridReceitas.innerHTML="";//limpa o que tem hoje (aquele html estático)
@@ -41,7 +41,7 @@ document.addEventListener('click', (event) => {
     const id = Number(target.getAttribute('data-id'));
     
     // Procura a receita no seu arquivo de dados
-    const receita = mockRecipes.find(r => r.id === id);
+    const receita = receitasAtuais.find(r => r.id === id);
 
     if (receita) {
       // Preenche o que aparece no Modal
@@ -66,7 +66,7 @@ inputBusca?.addEventListener('input', (evento) => {
   const termoBusca = (evento.target as HTMLInputElement).value.toLowerCase();
 
   // 2. Filtramos o array original baseado no título ou categoria
-  const receitasFiltradas = mockRecipes.filter(receita => {
+  const receitasFiltradas = receitasAtuais.filter(receita => {
     const titulo = receita.title.toLowerCase();
     const categoria = receita.category.toLowerCase();
     
@@ -84,9 +84,9 @@ document.addEventListener('click', (event) => {
     const categoria = target.getAttribute('data-categoria')?.toLowerCase();
 
     if (categoria === 'tudo' || !categoria) {
-      renderizarReceitas(mockRecipes);
+      renderizarReceitas(receitasAtuais);
     } else {
-      const filtradas = mockRecipes.filter(r => 
+      const filtradas = receitasAtuais.filter(r => 
         r.category.toLowerCase() === categoria
       );
       renderizarReceitas(filtradas);
@@ -113,12 +113,12 @@ async function buscarReceitasDaInternet() {
     prepTime: "20-30 min",
     difficulty: "Média",
     image: item.strMealThumb,
-    ingredients: [item.strIngredient1, item.strIngredient2, item.strIngredient3].filter(i => i), 
+    ingredients:Object.keys(item).filter(key =>  key.startsWith('strIngredient') && item[key]).map(key => item[key]), 
     instructions: item.strInstructions
    }));
-
+    receitasAtuais =[ ...receitasDaAPI , ...mockRecipes];
+    renderizarReceitas(receitasAtuais);
     // 3. Renderiza as receitas que vieram da internet!
-    renderizarReceitas(receitasDaAPI);
 
   } catch (erro) {
     console.error("Erro ao buscar receitas:", erro);

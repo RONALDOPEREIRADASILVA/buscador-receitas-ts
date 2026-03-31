@@ -62,19 +62,28 @@ document.addEventListener('click', (event) => {
 });
 // 1. Ouvinte de digitação no campo de busca
 inputBusca?.addEventListener('input', (evento) => {
-  // Pegamos o valor digitado e transformamos em minúsculo para facilitar a busca
-  const termoBusca = (evento.target as HTMLInputElement).value.toLowerCase();
+  const termo = (evento.target as HTMLInputElement).value.toLowerCase();
 
-  // 2. Filtramos o array original baseado no título ou categoria
+  // Se o usuário apagar tudo, voltamos para a busca padrão (ex: pasta)
+  if (termo.length === 0) {
+    buscarReceitasDaInternet('pasta');
+    return;
+  }
+
+  // 1. FILTRO LOCAL (Rápido): Filtra o que já carregamos na variável receitasAtuais
   const receitasFiltradas = receitasAtuais.filter(receita => {
-    const titulo = receita.title.toLowerCase();
-    const categoria = receita.category.toLowerCase();
-    
-    return titulo.includes(termoBusca) || categoria.includes(termoBusca);
+    return receita.title.toLowerCase().includes(termo) || 
+           receita.category.toLowerCase().includes(termo);
   });
 
-  // 3. Mandamos renderizar apenas o que sobrou no filtro
+  // 2. RENDERIZAÇÃO: Mostra o que encontrou localmente
   renderizarReceitas(receitasFiltradas);
+
+  // 3. BUSCA NA API (Opcional): Se quiser que ele busque coisas novas na internet 
+  // enquanto o usuário digita (dica: use após 3 letras para não sobrecarregar)
+  if (termo.length > 3) {
+    buscarReceitasDaInternet(termo);
+  }
 });
 // Lógica para os botões de categoria
 document.addEventListener('click', (event) => {
@@ -99,10 +108,10 @@ document.addEventListener('click', (event) => {
     target.classList.replace('btn-outline-secondary', 'btn-success');
   }
 });
-async function buscarReceitasDaInternet() {
+async function buscarReceitasDaInternet(termo ='pasta') {
   try {
     // 1. Fazendo o "frete" (pedido ao servidor)
-    const resposta = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=pasta');
+    const resposta = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${termo}`);
     const dados = await resposta.json();
 
     // 2. "Traduzindo" o que a API manda para o seu formato Recipe

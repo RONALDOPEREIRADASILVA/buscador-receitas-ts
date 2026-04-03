@@ -120,7 +120,7 @@ async function buscarReceitasDaInternet(termo ='pasta') {
     title: item.strMeal,
     category: "Massas", 
     prepTime: "20-30 min",
-    difficulty: "Média",
+    difficulty: "Médio",
     image: item.strMealThumb,
     ingredients:Object.keys(item).filter(key =>  key.startsWith('strIngredient') && item[key]).map(key => item[key]), 
     instructions: item.strInstructions

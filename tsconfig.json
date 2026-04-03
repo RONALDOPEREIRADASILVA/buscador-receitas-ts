@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2023",
+    "outDir": "./dist",
+    "target": "Es6",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],

@@ -3,7 +3,7 @@ export interface Recipe{
     title:string;
     category :string;
     prepTime :string;
-    difficulty:'Fácil'|'Média' | 'Difícil';
+    difficulty:'Fácil'|'Médio' | 'Difícil';
     image : string;
     ingredients:string[];
     instructions:string;
